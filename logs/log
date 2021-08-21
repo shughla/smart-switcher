@@ -1,1 +1,18 @@
-
+rc: 0
+Subscribed: 1 (0,)
+topic: button qos: 0 state: 1
+topic: button qos: 0 state: 0
+topic: button qos: 0 state: 1
+Sat Aug 21 21:49:38 2021 - rc: 0
+Sat Aug 21 21:49:38 2021 - Subscribed: 1 (0,)
+Sat Aug 21 21:49:53 2021 - topic: button. qos: 0. state: 0
+Sat Aug 21 21:49:54 2021 - topic: button. qos: 0. state: 1
+Sat Aug 21 21:49:54 2021 - topic: button. qos: 0. state: 0
+Sat Aug 21 21:49:59 2021 - topic: txt. qos: 0. state: hello
+Sat Aug 21 21:50:03 2021 - topic: txt. qos: 0. state: 
+Sat Aug 21 21:51:38 2021 - rc: 0
+Sat Aug 21 21:51:38 2021 - Subscribed: 1 (0,)
+Sat Aug 21 21:51:59 2021 - topic: button. qos: 0. state: 1
+Sat Aug 21 21:51:59 2021 - topic: button. qos: 0. state: 0
+Sat Aug 21 21:52:00 2021 - topic: button. qos: 0. state: 1
+Sat Aug 21 21:52:00 2021 - topic: button. qos: 0. state: 0

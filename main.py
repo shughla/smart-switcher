@@ -1,26 +1,37 @@
 import paho.mqtt.client as mqtt
-import logger
+import logger as logger_cls
+import time
 if __name__ == '__main__':
-    logger.log_append("this is in logs/log")
+    logger = logger_cls.Logger
 
 
 def on_connect(mqttc, obj, flags, rc):
-    print("rc: " + str(rc))
+    log = time.ctime() + " - rc: " + str(rc)
+    logger.append(log)
+    print(log)
 
 
 def on_message(mqttc, obj, msg):
-    print(msg.topic + " " + str(msg.qos) + " " + str(msg.payload))
+    log = time.ctime() + " - topic: " + msg.topic + ". qos: " + str(msg.qos) + ". state: " + bytes(msg.payload).decode()
+    logger.append(log)
+    print(log)
 
 
 def on_publish(mqttc, obj, mid):
-    print("mid: " + str(mid))
+    log = time.ctime() + " - mid: " + str(mid)
+    logger.append(log)
+    print(log)
 
 
 def on_subscribe(mqttc, obj, mid, granted_qos):
-    print("Subscribed: " + str(mid) + " " + str(granted_qos))
+    log = time.ctime() + " - Subscribed: " + str(mid) + " " + str(granted_qos)
+    logger.append(log)
+    print(log)
 
 
 def on_log(mqttc, obj, level, string):
+    string = time.ctime() + " - " + string
+    logger.append(string)
     print(string)
 
 
