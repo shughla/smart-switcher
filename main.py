@@ -1,7 +1,7 @@
 import paho.mqtt.client as mqtt
-
+import logger
 if __name__ == '__main__':
-    print("Smart Switcher")
+    logger.log_append("this is in logs/log")
 
 
 def on_connect(mqttc, obj, flags, rc):
