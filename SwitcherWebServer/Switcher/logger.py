@@ -1,7 +1,11 @@
+import time
+
+
 class Logger:
-    path = "logs"
+    path = "../logs"
     filename = "log"
 
+    # default path is logs/log file
     def __init__(self, path: str, filename: str):
         if path != "":
             self.path = path
@@ -12,7 +16,7 @@ class Logger:
     @classmethod
     def append(cls, value: str):
         with open(cls.path + "/" + cls.filename, 'a+') as f:
-            f.write(value + "\n") # \n might be useless
+            f.write(value + "\n")  # \n might be useless
 
     # without extra '/'
     @classmethod
@@ -31,6 +35,10 @@ class Logger:
     @classmethod
     def get_file_name(cls) -> str:
         return cls.filename
+
+    @classmethod
+    def get_time(cls) -> str:
+        return time.ctime() + " - "
 
 
 if __name__ == '__main__':
