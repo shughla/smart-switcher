@@ -1,8 +1,8 @@
-__pycache__/
+*/__pycache__/
 *.py[cod]
 *$py.class
 *.so
-.Python
-env/
-build/
+*/.Python
+*/env/
+*/build/
 logs/log
