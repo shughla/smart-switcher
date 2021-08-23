@@ -16,3 +16,57 @@ Sat Aug 21 21:51:59 2021 - topic: button. qos: 0. state: 1
 Sat Aug 21 21:51:59 2021 - topic: button. qos: 0. state: 0
 Sat Aug 21 21:52:00 2021 - topic: button. qos: 0. state: 1
 Sat Aug 21 21:52:00 2021 - topic: button. qos: 0. state: 0
+Sat Aug 21 22:04:25 2021 - rc: 0
+Sat Aug 21 22:04:25 2021 - Subscribed: 1 (0,)
+Sat Aug 21 22:05:06 2021 - rc: 0
+Sat Aug 21 22:05:06 2021 - Subscribed: 1 (0,)
+Sat Aug 21 22:05:38 2021 - rc: 0
+Sat Aug 21 22:05:38 2021 - Subscribed: 1 (0,)
+Sat Aug 21 22:08:59 2021 - topic: button. qos: 0. state: 0
+Sat Aug 21 22:09:00 2021 - topic: button. qos: 0. state: 1
+Sat Aug 21 22:09:01 2021 - topic: button. qos: 0. state: 0
+Sat Aug 21 22:09:02 2021 - topic: button. qos: 0. state: 1
+Sat Aug 21 22:09:03 2021 - topic: button. qos: 0. state: 0
+Sat Aug 21 22:09:23 2021 - topic: button2. qos: 0. state: 1
+Sat Aug 21 22:09:24 2021 - topic: button2. qos: 0. state: 0
+Sat Aug 21 22:09:24 2021 - topic: button2. qos: 0. state: 1
+Sat Aug 21 22:09:25 2021 - topic: button2. qos: 0. state: 0
+Sat Aug 21 22:09:39 2021 - topic: button2. qos: 0. state: 1
+Sat Aug 21 22:09:40 2021 - topic: button2. qos: 0. state: 0
+Sat Aug 21 22:09:40 2021 - topic: button2. qos: 0. state: 1
+Sat Aug 21 22:09:41 2021 - topic: button2. qos: 0. state: 0
+Sat Aug 21 22:09:48 2021 - topic: button2. qos: 0. state: 1
+Sat Aug 21 22:09:48 2021 - topic: button2. qos: 0. state: 0
+Sat Aug 21 22:10:37 2021 - topic: button. qos: 0. state: 1
+Sat Aug 21 22:10:37 2021 - topic: button. qos: 0. state: 0
+Sat Aug 21 22:10:39 2021 - topic: button2. qos: 0. state: 1
+Sat Aug 21 22:10:39 2021 - topic: button2. qos: 0. state: 0
+Mon Aug 23 11:50:40 2021 - Connection Refused (MQTT Server probably down)
+Mon Aug 23 11:50:44 2021 - Connection Refused (MQTT Server probably down)
+Mon Aug 23 11:50:48 2021 - Connection Refused (MQTT Server probably down)
+Mon Aug 23 11:50:52 2021 - Connection Refused (MQTT Server probably down)
+Mon Aug 23 11:50:56 2021 - Connection Refused (MQTT Server probably down)
+Mon Aug 23 11:51:00 2021 - Connection Refused (MQTT Server probably down)
+Mon Aug 23 11:51:04 2021 - Connection Refused (MQTT Server probably down)
+Mon Aug 23 11:51:08 2021 - Connection Refused (MQTT Server probably down)
+Mon Aug 23 11:51:12 2021 - Connection Refused (MQTT Server probably down)
+Mon Aug 23 11:51:16 2021 - Connection Refused (MQTT Server probably down)
+Mon Aug 23 11:51:20 2021 - Connection Refused (MQTT Server probably down)
+Mon Aug 23 11:52:16 2021 - try #1: Connection Refused (MQTT Server probably down)
+Mon Aug 23 11:52:20 2021 - try #2: Connection Refused (MQTT Server probably down)
+Mon Aug 23 11:52:24 2021 - try #3: Connection Refused (MQTT Server probably down)
+Mon Aug 23 11:52:28 2021 - try #4: Connection Refused (MQTT Server probably down)
+Mon Aug 23 11:52:32 2021 - try #5: Connection Refused (MQTT Server probably down)
+Mon Aug 23 11:52:36 2021 - try #6: Connection Refused (MQTT Server probably down)
+Mon Aug 23 11:52:40 2021 - try #7: Connection Refused (MQTT Server probably down)
+Mon Aug 23 11:52:44 2021 - try #8: Connection Refused (MQTT Server probably down)
+Mon Aug 23 11:52:48 2021 - try #9: Connection Refused (MQTT Server probably down)
+Mon Aug 23 11:52:52 2021 - try #10: Connection Refused (MQTT Server probably down)
+Mon Aug 23 11:52:59 2021 - try #1: Connection Refused (MQTT Server probably down)
+Mon Aug 23 11:53:04 2021 - try #2: Connection Refused (MQTT Server probably down)
+Mon Aug 23 11:53:09 2021 - try #3: Connection Refused (MQTT Server probably down)
+Mon Aug 23 11:53:14 2021 - try #4: Connection Refused (MQTT Server probably down)
+Mon Aug 23 11:53:19 2021 - try #5: Connection Refused (MQTT Server probably down)
+Mon Aug 23 11:54:58 2021 - try #1: Connection Refused (MQTT Server probably down)
+Mon Aug 23 11:55:03 2021 - try #2: Connection Refused (MQTT Server probably down)
+Mon Aug 23 11:55:52 2021 - try #1: Connection Refused (MQTT Server probably down)
