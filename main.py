@@ -1,39 +1,37 @@
 import paho.mqtt.client as mqtt
 import logger as logger_cls
 import time
-
 MAX_TRIES = 5
 
 
 def on_connect(mqtt_cl, obj, flags, rc):
-    log = time.ctime() + " - rc: " + str(rc)
+    log = logger.get_time() + "rc: " + str(rc)  # mqtt_cl.connack_string(rc)
     logger.append(log)
     print(log)
 
 
 def on_message(mqtt_cl, obj, msg):
-    log = time.ctime() + " - topic: " + msg.topic + ". qos: " + str(msg.qos) + ". state: " + bytes(msg.payload).decode()
+    log = logger.get_time() + "topic: " + msg.topic + ". qos: " + str(msg.qos) + ". state: " + bytes(msg.payload).decode()
     logger.append(log)
     print(log)
 
 
 def on_publish(mqtt_cl, obj, mid):
-    log = time.ctime() + " - mid: " + str(mid)
+    log = logger.get_time() + "mid: " + str(mid)
     logger.append(log)
     print(log)
 
 
 def on_subscribe(mqtt_cl, obj, mid, granted_qos):
-    log = time.ctime() + " - Subscribed: " + str(mid) + " " + str(granted_qos)
+    log = logger.get_time() + "Subscribed: " + str(mid) + " " + str(granted_qos)
     logger.append(log)
     print(log)
 
 
 def on_log(mqtt_cl, obj, level, string):
-    string = time.ctime() + " - " + string
+    string = logger.get_time() + string
     logger.append(string)
     print(string)
-
 
 def set_mqtt(mqtt_cl):
     # If you want to use a specific client id, use
@@ -59,10 +57,11 @@ if __name__ == '__main__':
         try:
             mqttc.connect("localhost", 1883, 60)
         except ConnectionRefusedError:
-            log_msg = time.ctime() + " - try #" + str(tries) + ": Connection Refused (MQTT Server probably down)"
+            log_msg = logger.get_time() + "try #" + str(tries) + ": Connection Refused (MQTT Server probably down)"
             logger.append(log_msg)
             print(log_msg)
         if tries == MAX_TRIES:
+            log_msg = logger.get_time() + "tried " + str(MAX_TRIES) + " times, cannot connect."
             break
         tries += 1
         time.sleep(5)
