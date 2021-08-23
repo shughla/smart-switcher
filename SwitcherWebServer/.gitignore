@@ -4,6 +4,5 @@ __pycache__/
 *.so
 .Python
 env/
-venv/
 build/
 logs/log
