@@ -2,7 +2,7 @@ import time
 
 
 class Logger:
-    path = "logs"
+    path = "../logs"
     filename = "log"
 
     # default path is logs/log file
