@@ -13,7 +13,10 @@ if __name__ == "__main__":
 
 
 def render_index():
-    data = {'name': 'სახელი', 'surname': 'გვარი'}
+    data = dict()
+    for i in range(10):
+        data[i] = str(i)
+    print(data)
     return render_template("index.html", data=data)
 
 
