@@ -1,4 +1,4 @@
-from Switcher.logger import Logger
+from SwitcherWebServer.Switcher.logger import Logger
 import paho.mqtt.client as mqtt
 from time import sleep
 
