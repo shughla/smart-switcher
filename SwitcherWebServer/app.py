@@ -15,9 +15,9 @@ if __name__ == "__main__":
 def render_index():
     data = dict()
     for i in range(10):
-        data[i] = str(i)
-    print(data)
-    return render_template("index.html", data=data)
+        data["val" + str(i)] = str(i)
+
+    return render_template("index.html", data=data)  # =data is dictionary.
 
 
 @app.route('/')
