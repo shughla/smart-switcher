@@ -35,10 +35,10 @@ class Switcher:
         self.logger.append(log)
         print(log)
 
-    def on_log(self, obj, level, string):
-        string = self.logger.get_time() + string
-        self.logger.append(string)
-        print(string)
+    def on_log(self, obj, level, message: str):
+        string = self.logger.get_time() + message
+        self.logger.append(message)
+        print(message)
 
     def subscribe(self, topic="#", qos=0):
         self.mqttc.subscribe(topic, qos)
