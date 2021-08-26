@@ -1,21 +1,23 @@
-<head> hello</head>
-<body>
-debilo
-</body>
-<form action="/switch" method="post">
-    <input type="number" value="Number" name="num" min="0"/>
-    <input type="checkbox" value="state"/>
-</form>
+<html>
+<head>
+    <meta charSet="UTF-8">
+    <title>Login</title>
 
-<script>
-    let val = '{{data|tojson}}' ;
-    const obj = JSON.parse(val);
-    console.log(val);
-    console.log(obj);
-    for (let elem in obj) {
-        document.write("key: " + elem);
-        document.write(" : ");
-        document.write("value: " + obj[elem]);
-        document.writeln("</br>");
-    }
-</script>
+   <link rel= "stylesheet" type= "text/css" href= "{{ url_for('static',filename='styles/mainpage.css') }}">
+</head>
+<body>
+<header className="login-header">
+    <h1 className="header-title"></h1>
+</header>
+<body className="body">
+
+<div className="login">
+    <form method="post">
+        <input type="text" name="u" placeholder="Username" required="required"/>
+        <input type="password" name="p" placeholder="Password" required="required"/>
+        <button type="submit" className="btn btn-primary btn-block btn-large">Login</button>
+    </form>
+</div>
+</body>
+</body>
+</html>

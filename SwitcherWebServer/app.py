@@ -1,7 +1,7 @@
 from flask import Flask, render_template, request
 from Switcher.switcher import Switcher
 
-app = Flask(__name__)
+app = Flask(__name__, static_folder="../static")
 
 # main run, runs switcher first, if can't connect doesn't run server
 if __name__ == "__main__":
