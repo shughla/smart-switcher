@@ -7,5 +7,5 @@
 <ul>
 <h3>Prerequisites:</h3>
   <li>Flask >= 1</li>
-  <li>Paho >= idk</li>
+  <li>Paho MQTT ~=1.5</li>
 </ul>
