@@ -1,3 +1,5 @@
+import json
+
 from flask import Flask, render_template, request
 from Switcher.switcher import Switcher
 
@@ -15,8 +17,8 @@ if __name__ == "__main__":
 def render_index():
     data = dict()
     for i in range(10):
-        data[i] = str(i)
-    print(data)
+        data["val" + str(i)] = str(i)
+    var = json.dumps(data)
     return render_template("index.html", data=data)
 
 
