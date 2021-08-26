@@ -3,7 +3,7 @@
     <meta charSet="UTF-8">
     <title>Login</title>
 
-   <link rel= "stylesheet" type= "text/css" href= "{{ url_for('static',filename='styles/mainpage.css') }}">
+   <link rel= "stylesheet" type= "text/css" href= "{{url_for('static', filename='styles/main.css')}}">
 </head>
 <body>
 <header className="login-header">
@@ -12,7 +12,7 @@
 <body className="body">
 
 <div className="login">
-    <form method="post">
+    <form method="post" action="/login">
         <input type="text" name="u" placeholder="Username" required="required"/>
         <input type="password" name="p" placeholder="Password" required="required"/>
         <button type="submit" className="btn btn-primary btn-block btn-large">Login</button>

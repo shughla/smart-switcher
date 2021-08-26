@@ -1,7 +1,7 @@
 from flask import Flask, render_template, request
 from Switcher.switcher import Switcher
 
-app = Flask(__name__, static_folder="../static")
+app = Flask(__name__)
 
 # main run, runs switcher first, if can't connect doesn't run server
 if __name__ == "__main__":
@@ -34,6 +34,11 @@ def switch():
     print(dct.get("num"))
     # print(dct.get("state"))
     return render_index()
+
+
+@app.route('/login', methods=['POST'])
+def login_page():
+    return render_template("login.html")
 
 
 @app.route('/switch', methods=['GET'])
