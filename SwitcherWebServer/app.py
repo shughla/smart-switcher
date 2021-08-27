@@ -36,9 +36,9 @@ def switch():
     return render_index()
 
 
-@app.route('/login', methods=['POST'])
+@app.route('/boxes', methods=['POST'])
 def login_page():
-    return render_template("login.html")
+    return render_template("boxes.html")
 
 
 @app.route('/switch', methods=['GET'])
