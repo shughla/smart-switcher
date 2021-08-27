@@ -41,6 +41,17 @@ def login_page():
     return render_template("boxes.html")
 
 
+@app.route('/boxes', methods=['GET'])
+def main_menu():
+    # do some authentification here
+    return render_template("boxes.html")
+
+
+@app.route("/box", methods=['GET'])
+def box_page():
+    return render_template("box.html")
+
+
 @app.route('/switch', methods=['GET'])
 def switch_redirect():
     return main_page

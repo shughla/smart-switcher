@@ -223,6 +223,15 @@
       box-shadow: 0 15px 25px rgba(27, 250, 164, 0.8);
     }
 
+    .text-button{
+      color:white;
+      background:none;
+      border:none;
+      margin:0;
+      padding:0;
+      cursor: pointer;
+    }
+
     .switchers-body{
       background: url(https://scontent.ftbs5-3.fna.fbcdn.net/v/t1.15752-9/240811804_556638015528816_131756996071624707_n.jpg?_nc_cat=102&ccb=1-5&_nc_sid=ae9488&_nc_ohc=14KSAdm3k6cAX_6uo9Y&tn=EwygXlGR54NdJFUc&_nc_ht=scontent.ftbs5-3.fna&oh=f78ce1cff7ee5a71d88b59c5c0a2d79e&oe=614DFFF4);
       display: flex;
