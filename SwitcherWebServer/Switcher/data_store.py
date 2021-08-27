@@ -8,7 +8,7 @@ class DataStore:
     DEFAULT_FILE_PATH = "../Data/data.json"
     data_file_path = None
     # probably something like ლოკაცია -> {სვიჩი-1, სვიჩი-2, სვიჩი-3}
-    main_dict = dict()  # type: dict[str : list[Switch]]
+    main_data = dict()  # type: dict[str : list[Switch]]
 
     # this needs ../data to exist
     def __init__(self, data_file_path=DEFAULT_FILE_PATH):
@@ -18,13 +18,17 @@ class DataStore:
         except FileNotFoundError:
             raise Exception("File with name: \"" + data_file_path + "\" doesn't exist.")
 
-    def deserialize_json(self, data_file_path=DEFAULT_FILE_PATH):
+    @classmethod
+    def deserialize_json(cls, data_file_path=DEFAULT_FILE_PATH):
         with open(data_file_path, "r") as f:
-            self.main_dict = json.load(f)
+            cls.main_data = json.load(f)
 
-    def serialize_json(self, obj: dict[str:list[Switch]], data_file_path=DEFAULT_FILE_PATH):
+    @classmethod
+    def serialize_json(cls, obj=None, data_file_path=DEFAULT_FILE_PATH):
+        if obj is None:
+            obj = cls.main_data
         with open(data_file_path, "w") as f:
-            json.dump(self.main_dict, f)
+            json.dump(obj, f)
 
     @classmethod
     def update_data(cls, data: dict[str, list[Switch]], data_file_path=DEFAULT_FILE_PATH):
