@@ -2,15 +2,13 @@ import time
 
 
 class Logger:
-    path = "../logs"
-    filename = "log"
+    path = ""
+    filename = "" # უნდა გადავაკეთო ეს რო ერთი path გადაეცეს მარტო
 
     # default path is logs/log file
-    def __init__(self, path: str, filename: str):
-        if path != "":
-            self.path = path
-        if filename != "":
-            self.file_name = filename
+    def __init__(self, path="../logs", filename="log"):
+        self.path = path
+        self.file_name = filename
 
     # appends value, which is of type str
     @classmethod
