@@ -6,17 +6,28 @@
    <link rel= "stylesheet" type= "text/css" href= "{{url_for('static', filename='styles/main.css')}}">
 </head>
 <body>
-<header className="login-header">
-    <h1 className="header-title"></h1>
-</header>
-<body className="body">
-
-<div className="login">
-    <form method="post" action="/login">
-        <input type="text" name="u" placeholder="Username" required="required"/>
-        <input type="password" name="p" placeholder="Password" required="required"/>
-        <button type="submit" className="btn btn-primary btn-block btn-large">Login</button>
-    </form>
+<body class="login-body">
+<h1 class="header-title">ჯუნიორ პროექტი</h1>
+<div class="login-box">
+  <h2>შეიყვანეთ მონაცემები</h2>
+  <form method="post" action="/boxes">
+    <div class="user-box">
+      <input type="text" name="" required="">
+      <label>მომხარებელი</label>
+    </div>
+    <div class="user-box">
+      <input type="password" name="" required="">
+      <label>პაროლი</label>
+    </div>
+    <a href="">
+      <span></span>
+      <span></span>
+      <span></span>
+      <span></span>
+      შესვლა
+    </a>
+  </form>
+</div>
 </div>
 </body>
 </body>

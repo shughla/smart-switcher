@@ -1,0 +1,28 @@
+<html>
+<head>
+    <meta charSet="UTF-8">
+    <title>Boxes</title>
+
+      <link rel= "stylesheet" type= "text/css" href= "{{url_for('static', filename='styles/main.css')}}">
+
+</head>
+<body class="boxes-body">
+    <form method="post" action="/box">
+        <input type="submit" class="logout" value="გასვლა">
+        <div class="box-wrap">
+            <a class="box" href="#">
+                <p class="box-name">I სართული</p>
+            </a>
+            <a class="box" href="#">
+                <p class="box-name">II სართული</p>
+            </a>
+            <a class="box" href="#">
+                <p class="box-name">III სართული</p>
+            </a>
+            <a class="box" href="#">
+                <p class="box-name">IV სართული</p>
+            </a>
+        </div>
+    </form>
+</body>
+</html>
