@@ -51,6 +51,10 @@ def main_menu():
 def box_page():
     return render_template("box.html")
 
+@app.route("/edit", methods=['GET'])
+def edit_page():
+    return render_template("edit.html")
+
 
 @app.route('/switch', methods=['GET'])
 def switch_redirect():
