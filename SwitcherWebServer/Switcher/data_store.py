@@ -16,6 +16,8 @@ class DataStore:
         try:
             self.deserialize_json(data_file_path)
         except FileNotFoundError:
+            # empty dictionary
+            self.main_data = dict()  # type: dict[str : list[Switch]]
             raise Exception("File with name: \"" + data_file_path + "\" doesn't exist.")
 
     @classmethod
