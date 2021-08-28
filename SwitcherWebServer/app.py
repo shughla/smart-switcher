@@ -17,12 +17,12 @@ switcher = Switcher("junior", "project")
 # main run, runs switcher first, if can't connect doesn't run server
 
 
-def render_main():
+def render_login():
     # this needs to be normal render_template login.html
     # and data needs to be on render_boxes
     data = dict()
-    for i in range(10):
-        data["val" + str(i)] = str(i)
+    # for i in range(10):
+    #     data["val" + str(i)] = str(i)
     return render_template("index.html", data=data)  # =data is dictionary.
 
 
@@ -62,12 +62,12 @@ def terminal_print(string):
 def logout():
     if session.get(authenticated) is not None:
         session[authenticated] = None
-    return render_main()
+    return render_login()
 
 
 @app.route('/')
 def main_page():
-    return render_main()
+    return render_login()
 
 
 # after logging in
@@ -81,7 +81,7 @@ def login_page():
 
 def render_if_authenticated(template_name):
     if not is_authenticated():
-        return render_main()
+        return render_login()
     return render_template(template_name)
 
 
@@ -95,12 +95,13 @@ def main_menu():
 def switch():
     data = request.form
     dct = data.to_dict()
-    return render_main()
+    return render_login()
 
 
 @app.route("/box", methods=['GET'])
 def box_page():
     return render_if_authenticated("box.html")
+
 
 @app.route("/edit", methods=['GET'])
 def edit_page():

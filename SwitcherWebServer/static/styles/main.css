@@ -1,7 +1,7 @@
 .login-body {
 
     font-family: sans-serif;
-    background: url(https://scontent.ftbs5-3.fna.fbcdn.net/v/t1.15752-9/240786873_4244608545660837_3144786142924197363_n.jpg?_nc_cat=105&ccb=1-5&_nc_sid=ae9488&_nc_ohc=XDU4Ym2LewAAX_66nHo&_nc_oc=AQkEkhH5-Wqjay1XIXiumni0vdHbw3gJ_65ccDdcvhtQYubJ_k7hD0ch-Ehd6piaCIc&_nc_ht=scontent.ftbs5-3.fna&oh=8e0d5ae4fa8a433dfce607434145895b&oe=614EC8E7);
+    background: url("../images/login.jpg");
   }
   .header-title{
     color: #fff200;
@@ -171,7 +171,7 @@
   }
 
   .boxes-body{
-      background: url(https://scontent.ftbs5-3.fna.fbcdn.net/v/t1.15752-9/239639446_563569078395690_1053259295492152778_n.jpg?_nc_cat=106&ccb=1-5&_nc_sid=ae9488&_nc_ohc=LVZjlnIAqvcAX8iaEO8&tn=EwygXlGR54NdJFUc&_nc_ht=scontent.ftbs5-3.fna&oh=dd7603892d1e1adb4038e2f22331c335&oe=614CB98C);
+      background: url("../images/boxes.jpeg");
       font-family: 'Inconsolata', monospace;
       font-weight:bold;
       -webkit-font-smoothing: antialiased;
