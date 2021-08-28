@@ -19,6 +19,7 @@ def log_message(message):
 class Switcher:
     mqttc = mqtt.Client()
 
+    # need to call .run() after this
     def __init__(self, username, password):
         self.mqttc.on_connect = Switcher.on_connect
         self.mqttc.on_publish = Switcher.on_publish
