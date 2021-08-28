@@ -2,37 +2,26 @@ import time
 
 
 class Logger:
-    path = ""
-    filename = "" # უნდა გადავაკეთო ეს რო ერთი path გადაეცეს მარტო
+    filepath = "SwitcherWebServer/logs/log"
 
     # default path is logs/log file
-    def __init__(self, path="../logs", filename="log"):
-        self.path = path
-        self.file_name = filename
+    def __init__(self, filepath=None):
+        if filepath is not None:
+            self.filepath = filepath
 
     # appends value, which is of type str
     @classmethod
     def append(cls, value: str):
-        with open(cls.path + "/" + cls.filename, 'a+') as f:
+        with open(cls.filepath, 'a+') as f:
             f.write(value + "\n")  # \n might be useless
 
-    # without extra '/'
     @classmethod
-    def set_path(cls, path: str):
-        cls.path = path
-
-    # without extra '/'
-    @classmethod
-    def set_filename(cls, filename: str):
-        cls.filename = filename
+    def set_filepath(cls, filepath: str):
+        cls.filepath = filepath
 
     @classmethod
-    def get_path(cls) -> str:
+    def get_filepath(cls) -> str:
         return cls.path
-
-    @classmethod
-    def get_file_name(cls) -> str:
-        return cls.filename
 
     @classmethod
     def get_time(cls) -> str:
@@ -42,6 +31,5 @@ class Logger:
 if __name__ == '__main__':
     # ეს არის main-ისავით, მარტო მაშინ ეშვება თუ ხელით გაუშვებ, ისე არა
     logger = Logger
-    print(logger.path)
     logger.append("test")
     # log_append(path + file_name)
