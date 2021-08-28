@@ -6,7 +6,7 @@
     <link rel= "stylesheet" type= "text/css" href= "{{url_for('static', filename='styles/main.css')}}">
 </head>
 <body class="switchers-body">
-
+    <a href="/boxes" class="go-back" >უკან დაბრუნება</a>
     <h1 class="switchers-name">I სართული</h1>
     <table class="switches-table">
         <tr >
@@ -68,7 +68,19 @@
                 გამორთულია
             </td>
         </tr>
-      </table>
-      <a href="/boxes" class="go-back" >უკან დაბრუნება</a>
+        <tr class="new-switcher-tr">
+            <td class="new-switcher">ახალი ჩამრთველის სახელი:</td>
+            <td class="new-switcher">
+                <input type="text" class="new-switcher-text" value="">
+            </td>
+            <td class="new-switcher">
+                <input type="submit" class="new-switcher-btn" value="დამატება">
+            </td>
+        </tr>
+    </table>
+    <form method="get" action="/edit">
+        <input type="submit" value="რედაქტირება" class="edit-btn">
+    </form>
+
 </body>
 </html>

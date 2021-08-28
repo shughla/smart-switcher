@@ -102,6 +102,10 @@ def switch():
 def box_page():
     return render_if_authenticated("box.html")
 
+@app.route("/edit", methods=['GET'])
+def edit_page():
+    return render_if_authenticated("edit.html")
+
 
 @app.route('/switch', methods=['GET'])
 def switch_redirect():

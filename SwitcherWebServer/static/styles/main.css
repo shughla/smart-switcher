@@ -238,8 +238,90 @@
       cursor: pointer;
     }
 
+    .add-box{
+      padding: 15px;
+      margin:2%;
+      background: rgba(26, 245, 128, 0.6);
+      width: 300px;
+      height: 200px;
+      font-size: 20px;
+      font-family: 'Inconsolata', monospace;
+      font-weight:bold;
+      -webkit-font-smoothing: antialiased;
+      color: #5e00ff;
+      transition:.2s all;
+
+      border: none;
+      text-align: center;
+    }
+    .add-box:hover{
+      transform:scale(1);
+      background:rgb(26, 245, 128);
+      box-shadow: 0 15px 25px rgba(27, 250, 164, 0.8);
+    }
+
+    .new-box-text{
+      margin-top: 5%;
+      height: 20%;
+      width: 80%;
+      border-color: #5e00ff;
+    }
+
+    .new-box-btn{
+      margin-top: 10%;
+      height: 20%;
+      width: 60%;
+      background: rgb(255, 242, 0);
+       cursor: pointer;
+      font-size: 20px;
+      font-family: 'Inconsolata', monospace;
+      font-weight:bold;
+      -webkit-font-smoothing: antialiased;
+      color: #5e00ff;
+    }
+
+    .new-switcher-text{
+      height: 60%;
+      width: 80%;
+      border-color: #5e00ff;
+    }
+
+    .new-switcher-btn{
+      height: 60%;
+      width: 60%;
+      background: rgb(255, 242, 0);
+       cursor: pointer;
+      font-size: 20px;
+      font-family: 'Inconsolata', monospace;
+      font-weight:bold;
+      -webkit-font-smoothing: antialiased;
+      color: #5e00ff;
+    }
+
+    .new-switcher{
+      border: none;
+      background: rgba(127, 255, 0, 0);
+    }
+
+    .new-switcher-tr{
+      background: rgba(127, 255, 0, 0.6);
+    }
+
+    .edit-btn{
+      height: 40px;
+      width: 200px;
+      margin-left: 60%;
+      font-size: 20px;
+      font-family: 'Inconsolata', monospace;
+      font-weight:bold;
+      -webkit-font-smoothing: antialiased;
+      color: #5e00ff;
+      cursor: pointer;
+      background: #b6ec63;
+    }
     .switchers-body{
-      background: url(https://scontent.ftbs5-3.fna.fbcdn.net/v/t1.15752-9/240811804_556638015528816_131756996071624707_n.jpg?_nc_cat=102&ccb=1-5&_nc_sid=ae9488&_nc_ohc=14KSAdm3k6cAX_6uo9Y&tn=EwygXlGR54NdJFUc&_nc_ht=scontent.ftbs5-3.fna&oh=f78ce1cff7ee5a71d88b59c5c0a2d79e&oe=614DFFF4);
+      background: rgb(102, 138, 99);
+      /*background: url(https://scontent.ftbs5-3.fna.fbcdn.net/v/t1.15752-9/240811804_556638015528816_131756996071624707_n.jpg?_nc_cat=102&ccb=1-5&_nc_sid=ae9488&_nc_ohc=14KSAdm3k6cAX_6uo9Y&tn=EwygXlGR54NdJFUc&_nc_ht=scontent.ftbs5-3.fna&oh=f78ce1cff7ee5a71d88b59c5c0a2d79e&oe=614DFFF4);*/
       display: flex;
       flex-direction: column;
   }
@@ -416,7 +498,7 @@
   .go-back{
       background: red;
       text-decoration: none;
-      margin-left: 65%;
+      margin-left: 5%;
       margin-top: 30px;
       width: 200px;
       height: 30px;
@@ -446,4 +528,68 @@
   .switch-off{
       background-color: tomato;
       opacity: 0.6;
+  }
+
+  .edit-table{
+    width: 35%;
+  }
+
+  .switch-name-edit{
+    height: 30px;
+    width: 80%;
+    font-size: 20px;
+    color: #5e00ff;
+  }
+
+  .box-name-edit{
+    height: 40px;
+    width: 300px;
+    font-size: 30px;
+    color: rgba(7, 25, 225, 0.8);
+  }
+
+  .edit-switchers-name{
+    margin-left: 40%;
+  }
+
+  .switch-delete-btn{
+    height: 50%;
+    width: 90%;
+    font-size: 120%;
+    background: red;
+    cursor: pointer;
+    text-align: center;
+  }
+
+  .btns-div{
+    display: flex;
+    flex-direction: row;
+    margin-left: 40%;
+  }
+
+  .save-btn{
+    height: 40px;
+    width: 200px;
+    background: green;
+    color: white;
+    cursor: pointer;
+    font-size: 120%;
+  }
+
+  .delete-btn{
+    height: 40px;
+    width: 200px;
+    background: red;
+    color: white;
+    cursor: pointer;
+    margin-left: 10%;
+    font-size: 120%;
+  }
+
+  .save-btn:hover{
+    box-shadow: 0 5px 40px rgb(93, 250, 15);
+  }
+
+  .delete-btn:hover{
+    box-shadow: 0 5px 40px rgb(252, 0, 0);
   }
