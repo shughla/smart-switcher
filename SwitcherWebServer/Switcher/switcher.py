@@ -1,4 +1,5 @@
 from SwitcherWebServer.Switcher.logger import Logger
+from SwitcherWebServer.Switcher.data_store import DataStore
 import paho.mqtt.client as mqtt
 from time import sleep
 from SwitcherWebServer.Switcher.switch import Switch
@@ -17,30 +18,21 @@ class Switcher:
         self.mqttc.username_pw_set(username, password)
 
     def on_connect(self, obj, flags, rc):
-        log = self.logger.get_time() + "rc: " + str(rc)  # mqtt_cl.connack_string(rc)
-        self.logger.append(log)
-        print(log)
+        self.log_message(self.logger.get_time() + "rc: " + str(rc))
 
     def on_message(self, obj, msg):
-        log = self.logger.get_time() + "topic: " + msg.topic + ". qos: " + str(msg.qos) + ". state: " + bytes(
-            msg.payload).decode()
-        self.logger.append(log)
-        print(log)
+        self.log_message(
+            self.logger.get_time() + "topic: " + msg.topic + ". qos: " + str(msg.qos) + ". state: " + bytes(
+                msg.payload).decode())
 
     def on_publish(self, obj, mid):
-        log = self.logger.get_time() + "mid: " + str(mid)
-        self.logger.append(log)
-        print(log)
+        self.log_message(self.logger.get_time() + "mid: " + str(mid))
 
     def on_subscribe(self, obj, mid, granted_qos):
-        log = self.logger.get_time() + "Subscribed: " + str(mid) + " " + str(granted_qos)
-        self.logger.append(log)
-        print(log)
+        self.log_message(self.logger.get_time() + "Subscribed: " + str(mid) + " " + str(granted_qos))
 
     def on_log(self, obj, level, message: str):
-        string = self.logger.get_time() + message
-        self.logger.append(message)
-        print(message)
+        self.log_message(self.logger.get_time() + message)
 
     def subscribe(self, topic="#", qos=0):
         self.mqttc.subscribe(topic, qos)
@@ -56,17 +48,18 @@ class Switcher:
             try:
                 self.mqttc.connect("localhost", 1883, 60)
             except ConnectionRefusedError:
-                log_msg = self.logger.get_time() + "try #" + str(
-                    tries) + ": Connection Refused (MQTT Server probably down)"
-                self.logger.append(log_msg)
-                print(log_msg)
+                self.log_message(self.logger.get_time() + "try #" + str(
+                    tries) + ": Connection Refused (MQTT Server probably down)")
             if tries == self.MAX_TRIES:
-                log_msg = self.logger.get_time() + "Tried connecting " + str(self.MAX_TRIES) + " times. Cannot connect."
-                self.logger.append(log_msg)
-                print(log_msg)
+                self.log_message(
+                    self.logger.get_time() + "Tried connecting " + str(self.MAX_TRIES) + " times. Cannot connect.")
                 break  # return in class
             tries += 1
             sleep(sleep_time)
+
+    def log_message(self, log_message):
+        self.logger.append(log_message)
+        print(log_message)  # temporary
 
     # subscribes to all topics
     def run(self):

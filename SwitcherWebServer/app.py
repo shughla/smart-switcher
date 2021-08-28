@@ -10,8 +10,8 @@ app = Flask(__name__)
 
 app.secret_key = '\xb8\x02\xc2\x16RH\xdftt=\x04\x05\x06yE>\n\xe1\xfc}\xa5\xc3\x9f\xac'
 app.config['SESSION_TYPE'] = "filesystem"
-
 authenticated = "authenticated"
+switcher = Switcher("junior", "project")
 
 
 # main run, runs switcher first, if can't connect doesn't run server
