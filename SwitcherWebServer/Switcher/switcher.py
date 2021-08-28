@@ -1,6 +1,8 @@
 from SwitcherWebServer.Switcher.logger import Logger
 import paho.mqtt.client as mqtt
 from time import sleep
+from SwitcherWebServer.Switcher.switch import Switch
+from SwitcherWebServer.Switcher.box import Box
 
 
 class Switcher:

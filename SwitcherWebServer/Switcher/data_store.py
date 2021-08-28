@@ -1,35 +1,38 @@
-class DataStore:
-    data_file_path = None
+import json
 
-    info_dict = {
-        0: "ადგილი",
-        1: "ნომერი",
-        2: "აღწერა",
-        3: "მდგომარეობა",
-        4: ""
-    }
-    main_dict = dict("სართული 1", {1,0,0,1,1,1,0}) # probably something like ლოკაცია -> {სვიჩი-1, სვიჩი-2, სვიჩი-3}
+from SwitcherWebServer.Switcher.switch import Switch
+from SwitcherWebServer.Switcher.box import Box
+
+
+class DataStore:
+    DEFAULT_FILE_PATH = "../Data/data.json"
+    data_file_path = None
+    # probably something like ლოკაცია -> {სვიჩი-1, სვიჩი-2, სვიჩი-3}
+    main_data = dict()  # type: dict[str : list[Switch]]
 
     # this needs ../data to exist
-    def __init__(self, data_file_path="../Data/data.txt"):
+    def __init__(self, data_file_path=DEFAULT_FILE_PATH):
         self.data_file_path = data_file_path
-        default_message = self.init_default_message()
         try:
-            f = open(data_file_path, "r+")
+            self.deserialize_json(data_file_path)
         except FileNotFoundError:
-            f = open(data_file_path, "w")
-            f.write(default_message)
-        else:
-            f.close()
-
+            raise Exception("File with name: \"" + data_file_path + "\" doesn't exist.")
 
     @classmethod
-    def get_file(cls) -> dict:
+    def deserialize_json(cls, data_file_path=DEFAULT_FILE_PATH):
+        with open(data_file_path, "r") as f:
+            cls.main_data = json.load(f)
 
-        return info
+    @classmethod
+    def serialize_json(cls, obj=None, data_file_path=DEFAULT_FILE_PATH):
+        if obj is None:
+            obj = cls.main_data
+        with open(data_file_path, "w") as f:
+            json.dump(obj, f)
 
-    def is_comment(self, line: str) -> bool:
-        return line.startswith(self.comment)
+    @classmethod
+    def update_data(cls, data: dict[str, list[Switch]], data_file_path=DEFAULT_FILE_PATH):
+        cls.serialize_json(data, data_file_path)
 
 
 if __name__ == "__main__":
