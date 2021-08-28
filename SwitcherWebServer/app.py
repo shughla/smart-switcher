@@ -53,7 +53,7 @@ def box_page():
 
 @app.route("/edit", methods=['GET'])
 def edit_page():
-    return render_template("edit.html")
+    return render_if_authenticated("edit.html")
 
 
 @app.route('/switch', methods=['GET'])
