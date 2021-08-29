@@ -5,64 +5,102 @@ from time import sleep
 from SwitcherWebServer.Switcher.switch import Switch
 from SwitcherWebServer.Switcher.box import Box
 
+MAX_TRIES = 3
+TOPIC = "switcher"  # sends something like this: index:status.
+
+logger = Logger()
+
+
+def log_message(message):
+    logger.append(message)
+    print(message)  # temporary
+
 
 class Switcher:
-    MAX_TRIES = 3
     mqttc = mqtt.Client()
-    logger = Logger
 
+    # need to call .run() after this
     def __init__(self, username, password):
-        self.mqttc.on_connect = self.on_connect
-        self.mqttc.on_publish = self.on_publish
-        self.mqttc.on_subscribe = self.on_subscribe
+        self.mqttc.on_connect = Switcher.on_connect
+        self.mqttc.on_publish = Switcher.on_publish
+        self.mqttc.on_subscribe = Switcher.on_subscribe
+        self.mqttc.on_message = Switcher.on_message
+        self.mqttc.on_disconnect = Switcher.on_disconnect
         self.mqttc.username_pw_set(username, password)
 
-    def on_connect(self, obj, flags, rc):
-        self.log_message(self.logger.get_time() + "rc: " + str(rc))
+    @staticmethod
+    def on_disconnect(client, userdata, rc=0):
+        log_message("Disconnected with result code " + str(rc))
+        client.loop_stop()
 
-    def on_message(self, obj, msg):
-        self.log_message(
-            self.logger.get_time() + "topic: " + msg.topic + ". qos: " + str(msg.qos) + ". state: " + bytes(
+    @staticmethod
+    def on_message(mqttc, obj, msg):
+        log_message(
+            logger.get_time() + "topic: " + msg.topic + ". qos: " + str(msg.qos) + ". state: " + bytes(
                 msg.payload).decode())
+        # check msg, if status error then set error flag or something similar.
 
-    def on_publish(self, obj, mid):
-        self.log_message(self.logger.get_time() + "mid: " + str(mid))
+    @staticmethod
+    def on_log(obj, level, message: str):
+        log_message(logger.get_time() + message)
 
-    def on_subscribe(self, obj, mid, granted_qos):
-        self.log_message(self.logger.get_time() + "Subscribed: " + str(mid) + " " + str(granted_qos))
-
-    def on_log(self, obj, level, message: str):
-        self.log_message(self.logger.get_time() + message)
-
-    def subscribe(self, topic="#", qos=0):
-        self.mqttc.subscribe(topic, qos)
-
-    def loop_forever(self):
-        self.mqttc.loop_forever()
-
-    def try_connect(self, max_tries=3, sleep_time=3):
-        self.MAX_TRIES = max_tries
+    @classmethod
+    def try_connect(cls, sleep_time=3):
         tries = 1
-        while not self.mqttc.is_connected():
+        while not cls.mqttc.is_connected():
             # mqttc.enable_logger() # need to check out
             try:
-                self.mqttc.connect("localhost", 1883, 60)
+                cls.mqttc.connect("localhost", 1883, 60)
+                log_message("Connected successfully.")
+                break
             except ConnectionRefusedError:
-                self.log_message(self.logger.get_time() + "try #" + str(
+                log_message(logger.get_time() + "try #" + str(
                     tries) + ": Connection Refused (MQTT Server probably down)")
-            if tries == self.MAX_TRIES:
-                self.log_message(
-                    self.logger.get_time() + "Tried connecting " + str(self.MAX_TRIES) + " times. Cannot connect.")
+            if tries == MAX_TRIES:
+                log_message(
+                    logger.get_time() + "Tried connecting " + str(MAX_TRIES) + " times. Cannot connect.")
                 break  # return in class
             tries += 1
             sleep(sleep_time)
 
-    def log_message(self, log_message):
-        self.logger.append(log_message)
-        print(log_message)  # temporary
+    @staticmethod
+    def on_connect(mqttc, obj, flags, rc):
+        log_message(logger.get_time() + "rc: " + str(rc))
+
+    @staticmethod
+    def on_publish(mqttc, obj, mid):
+        log_message(logger.get_time() + "mid: " + str(mid))
+
+    @staticmethod
+    def on_subscribe(mqttc, obj, mid, granted_qos):
+        log_message(logger.get_time() + "Subscribed: " + str(mid) + " " + str(granted_qos))
+
+    @classmethod
+    def send_message(cls, index: int, status: bool):
+        message = str(index) + ":" + str(int(status))
+        log_message("Sending message: [" + message + "]")
+        cls.mqttc.publish(TOPIC, payload=message)
+        log_message("Message has been sent.")
 
     # subscribes to all topics
-    def run(self):
-        self.try_connect()
-        self.subscribe()
-        self.loop_forever()
+    @classmethod
+    def subscribe(cls, topic="#", qos=0):
+        cls.mqttc.subscribe(topic, qos)
+
+    @classmethod
+    def start_looping(cls):
+        cls.mqttc.loop_start()
+
+    @classmethod
+    def run(cls):
+        cls.try_connect()
+        cls.subscribe()
+        cls.start_looping()  # loop forever if , meaning thread goes on forever
+
+
+if __name__ == "__main__":
+    logger.set_filepath("../logs/log")
+    switcher = Switcher("junior", "project")
+    switcher.run()  # thread is stopped here on cls.loop_forever()
+    switcher.send_message(15, True)
+    sleep(60)
