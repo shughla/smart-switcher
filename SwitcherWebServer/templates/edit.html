@@ -10,41 +10,22 @@
 <body class="switchers-body">
     <a href="/box" class="go-back" >უკან დაბრუნება</a>
     <h1 class="edit-switchers-name">
-        <input type="text" value="I სართული" class="box-name-edit">
+        <input type="text" value="{{data.description}}" class="box-name-edit">
     </h1>
     <table class="edit-table">
-        <tr>
-            <td>
-                <input type="text" value="I ოთახი" class="switch-name-edit">
-            </td>
-            <td>
-                <input type="submit" value="წაშლა" class="switch-delete-btn">
-            </td>
-        </tr>
-        <tr>
-            <td>
-                <input type="text" value="II ოთახი" class="switch-name-edit">
-            </td>
-            <td>
-                <input type="submit" value="წაშლა" class="switch-delete-btn">
-            </td>
-        </tr>
-        <tr>
-            <td>
-                <input type="text" value="III ოთახი" class="switch-name-edit">
-            </td>
-            <td>
-                <input type="submit" value="წაშლა" class="switch-delete-btn">
-            </td>
-        </tr>
-        <tr>
-            <td>
-                <input type="text" value="IV ოთახი" class="switch-name-edit">
-            </td>
-            <td>
-                <input type="submit" value="წაშლა" class="switch-delete-btn">
-            </td>
-        </tr>
+        {%for num in range(data3|length) %}
+        <form method="post" action="/delete_switch">
+            <tr>
+                <td>
+                    <input type="text" value="{{data3[num].name}}" class="switch-name-edit" name="{{num}}">
+                    <input type="hidden" name="data2" value="{{data2}}">
+                </td>
+                <td>
+                    <input type="submit" value="წაშლა" class="switch-delete-btn">
+                </td>
+            </tr>
+        </form>
+        {%endfor%}
     </table>
     <div class="btns-div">
         <form method="get" action="/box">

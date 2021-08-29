@@ -1,4 +1,4 @@
-from flask import Flask, render_template, request, session, redirect, url_for
+from flask import Flask, render_template, request, session
 from Switcher.switcher import Switcher
 from Switcher.box import Box
 from Switcher.switch import Switch
@@ -15,7 +15,7 @@ app.secret_key = '\xb8\x02\xc2\x16RH\xdftt=\x04\x05\x06yE>\n\xe1\xfc}\xa5\xc3\x9
 app.config['SESSION_TYPE'] = "filesystem"
 authenticated = "authenticated"
 switcher = Switcher("junior", "project")
-# switcher.run()
+switcher.run()
 disable_authentication = True
 # main run, runs switcher first, if can't connect doesn't run server
 
@@ -112,11 +112,9 @@ def render_if_authenticated(template_name, data=None, data2=None, data3=None):
 @app.route('/box', methods=['GET'])
 @app.route('/boxes', methods=['GET'])
 @app.route('/switch', methods=['GET'])
+@app.route('/edit', methods=['GET'])
 def main_menu():
     return render_main_page()
-
-
-
 
 
 @app.route('/add_switcher', methods=['POST'])
@@ -141,14 +139,27 @@ def box_page():
 def get_index(req: request):
     index = "error"
     for k in request.values:
+        if len(k) == 0:
+            continue
         index = int(k)
         break
     return index
 
 
-@app.route('/edit', methods=['GET'])
+@app.route('/delete_switch', methods=['POST'])
 def edit_page():
-    return render_if_authenticated("edit.html")
+    index = get_index(request)
+    box_index = int(request.values["data2"])
+    switcher.remove_switcher(box_index, index)
+    displayed_box = switcher.get_data()[box_index]
+    return render_if_authenticated("edit.html", displayed_box, box_index, switcher.get_switchers(box_index))
+
+
+@app.route('/edit', methods=['POST'])
+def goto_edit_page():
+    box_index = int(request.values["data2"])
+    displayed_box = switcher.get_data()[box_index]
+    return render_if_authenticated("edit.html", displayed_box, box_index, switcher.get_switchers(box_index))
 
 
 @app.route('/switch', methods=['POST'])

@@ -2,7 +2,7 @@ from SwitcherWebServer.Switcher.logger import Logger
 from SwitcherWebServer.Switcher.data_store import DataStore
 import paho.mqtt.client as mqtt
 from time import sleep
-import json
+
 
 from SwitcherWebServer.Switcher.switch import Switch
 from SwitcherWebServer.Switcher.box import Box
@@ -48,6 +48,11 @@ class Switcher:
     @classmethod
     def get_data_store(cls):
         return cls.data_store
+
+    @classmethod
+    def remove_switcher(cls, box_index, index):
+        cls.data_store.main_data[box_index].switch_array.pop(index)
+        cls.data_store.update_data(cls.data_store.main_data)
 
     @classmethod
     def get_switchers(cls, box_index):
