@@ -1,12 +1,15 @@
+from json import JSONEncoder
+import json
 
 
 class Switch:
-    name = "name of switch"
-    index = -1  # switch number
-    status = None  # type: bool
     ERROR_CODE = -1
 
-    def __init__(self, name: str, index: int, status: bool):
+    def toJSON(self):
+        return json.dumps(self, default=lambda o: o.__dict__,
+                          sort_keys=True, indent=4, ensure_ascii=False)
+
+    def __init__(self, name: str, index: int, status: int):
         self.name = name
         self.index = index
         self.status = status

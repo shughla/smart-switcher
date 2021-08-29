@@ -1,6 +1,9 @@
-from flask import Flask, render_template, request, session
+from flask import Flask, render_template, request, session, redirect, url_for
 from Switcher.switcher import Switcher
+from Switcher.box import Box
+from Switcher.switch import Switch
 import sys  # for debugging purposes
+import json
 
 app = Flask(__name__)
 # change to something else before running on local machine
@@ -12,9 +15,17 @@ app.secret_key = '\xb8\x02\xc2\x16RH\xdftt=\x04\x05\x06yE>\n\xe1\xfc}\xa5\xc3\x9
 app.config['SESSION_TYPE'] = "filesystem"
 authenticated = "authenticated"
 switcher = Switcher("junior", "project")
-
-
+switcher.run()
+disable_authentication = True
 # main run, runs switcher first, if can't connect doesn't run server
+
+if __name__ == "__main__":
+    switch = Switch("ლევანას ოთახი", 1, 1)
+    switcher.change_data_path("/Data/data.json")
+    box = Box("ეს არის ლევანას სახლის ბოქსი ", [switch])
+    switcher.save_data(box.toJSON())
+    r = switcher.get_data()
+    print(r["switch_array"][0]["name"])
 
 
 def render_login():
@@ -27,7 +38,7 @@ def render_login():
 
 
 def is_authenticated() -> bool:
-    return session.get(authenticated) is not None
+    return disable_authentication or session.get(authenticated) is not None
 
 
 def get_admin_credentials():
@@ -65,9 +76,21 @@ def logout():
     return render_login()
 
 
+@app.route('/add_block', methods=['POST'])
+def add_block():
+    description = request.form.get("description")
+    switcher.add_block(Box(description))
+    return render_main_page()
+
+
 @app.route('/')
 def main_page():
     return render_login()
+
+
+def render_main_page():
+    data = switcher.get_data()
+    return render_if_authenticated("boxes.html", data=data)
 
 
 # after logging in
@@ -76,38 +99,66 @@ def login_page():
     username = request.form.get("username")
     password = request.form.get("password")
     authenticate(username, password)
-    return render_if_authenticated("boxes.html")
+    return render_main_page()
 
 
-def render_if_authenticated(template_name):
+def render_if_authenticated(template_name, data=None, data2=None, data3=None):
     if not is_authenticated():
         return render_login()
-    return render_template(template_name)
+    return render_template(template_name, data=data, data2=data2, data3=data3)
 
 
+@app.route('/add_switcher', methods=['GET'])
+@app.route('/box', methods=['GET'])
 @app.route('/boxes', methods=['GET'])
+@app.route('/switch', methods=['GET'])
 def main_menu():
-    return render_if_authenticated("boxes.html")
+    return render_main_page()
 
 
-# with app.app_context('/'):
-@app.route('/switch', methods=['POST'])
-def switch():
-    data = request.form
-    dct = data.to_dict()
-    return render_login()
 
 
-@app.route("/box", methods=['GET'])
+
+@app.route('/add_switcher', methods=['POST'])
+def add_switcher():
+    box_index = int(request.values.get("box_index"))
+    boxes = switcher.get_data_store().main_data
+    switch_index = len(boxes[box_index].switch_array)
+    switcher_name = request.values.get("switcher_name")
+    new_switch = Switch(switcher_name, switch_index, False)
+    switcher.add_switcher(box_index, new_switch)
+    displayed_box = switcher.get_data()[box_index]
+    return render_if_authenticated("box.html", displayed_box, box_index, switcher.data_store.get_switches(box_index))
+
+
+@app.route('/box', methods=['POST'])
 def box_page():
-    return render_if_authenticated("box.html")
+    index = get_index(request)
+    return render_if_authenticated("box.html", switcher.get_boxes()[index], index,
+                                   switcher.get_switchers(index))
 
 
-@app.route("/edit", methods=['GET'])
+def get_index(req: request):
+    index = "error"
+    for k in request.values:
+        index = int(k)
+        break
+    return index
+
+
+@app.route('/edit', methods=['GET'])
 def edit_page():
     return render_if_authenticated("edit.html")
 
 
-@app.route('/switch', methods=['GET'])
+@app.route('/switch', methods=['POST'])
 def switch_redirect():
-    return render_if_authenticated("switch.html")
+    terminal_print(request.values)
+    index = int(request.values["idx"])
+    status = request.form.get("check")
+    if status == "on":
+        status = 1
+    else:
+        status = 0
+    switcher.switch_to(index, status)
+    return render_main_page()  # doesn't do anything because page just doesn't redirect

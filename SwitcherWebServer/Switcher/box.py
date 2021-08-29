@@ -1,13 +1,21 @@
 from SwitcherWebServer.Switcher.switch import Switch
+from json import JSONEncoder
+import json
 
 
 class Box:
-    description = "default description"
-    switch_array = []  # type:list[Switch]
+    switch_array = []
 
-    def __init__(self, description: str, switch_array: list[Switch]):
+    def __init__(self, description: str, switch_array=None):
         self.description = description
-        self.switch_array = switch_array
+        if switch_array is not None:
+            self.switch_array = switch_array
+        else:
+            self.switch_array = []
+
+    def toJSON(self):
+        return json.dumps(self, default=lambda o: o.__dict__,
+                          sort_keys=True, indent=4, ensure_ascii=False)
 
     @classmethod
     def get_switches(cls):

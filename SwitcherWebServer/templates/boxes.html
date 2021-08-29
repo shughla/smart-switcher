@@ -3,8 +3,8 @@
     <meta charSet="UTF-8">
     <title>Smart Switcher</title>
 
-      <link rel= "stylesheet" type= "text/css" href= "{{url_for('static', filename='styles/main.css')}}">
-      <link rel="shortcut icon" href="{{ url_for('static', filename='favicon.ico') }}">
+    <link rel= "stylesheet" type= "text/css" href= "{{url_for('static', filename='styles/main.css')}}">
+    <link rel="shortcut icon" href="{{ url_for('static', filename='favicon.ico') }}">
 </head>
 <body class="boxes-body">
 
@@ -12,20 +12,23 @@
     <input type="submit" class="logout" value="გასვლა">
 </form>
 
-<form method="get" action="/box">
-        <div class="box-wrap">
 
-             <input type="submit" value="სართული I" class="box" id="box">
-             <input type="submit" value="სართული II" class="box">
-             <input type="submit" value="სართული III" class="box">
-             <input type="submit" value="სართული IV" class="box">
-            <div class="add-box">
-                <a class="new-box">ახალი ბლოკის სახელი:</a>
-                <input type="text" class="new-box-text" value="">
-                <input type="submit" class="new-box-btn" value="დამატება">
-            </div>
 
-        </div>
-    </form>
+<form method="post" action="/box">
+    <div class="box-wrap">
+        {%for num in range(data|length) %}
+            <input type="submit" value="{{data[num].description}}" class="box" name="{{num}}">
+        {%endfor%}
+    </div>
+</form>
+
+<form action="/add_block" method="POST">
+    <div class="add-box">
+        <a class="new-box">ახალი ბლოკის სახელი:</a>
+        <input type="text" class="new-box-text" name="description" value="">
+        <input type="submit" class="new-box-btn" value="დამატება">
+    </div>
+</form>
+
 </body>
 </html>

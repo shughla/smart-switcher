@@ -2,6 +2,8 @@ from SwitcherWebServer.Switcher.logger import Logger
 from SwitcherWebServer.Switcher.data_store import DataStore
 import paho.mqtt.client as mqtt
 from time import sleep
+import json
+
 from SwitcherWebServer.Switcher.switch import Switch
 from SwitcherWebServer.Switcher.box import Box
 
@@ -18,6 +20,7 @@ def log_message(message):
 
 class Switcher:
     mqttc = mqtt.Client()
+    data_store = DataStore()
 
     # need to call .run() after this
     def __init__(self, username, password):
@@ -33,6 +36,33 @@ class Switcher:
         log_message("Disconnected with result code " + str(rc))
         client.loop_stop()
 
+    @classmethod
+    def get_data(cls):
+        cls.data_store.deserialize_json()
+        return cls.data_store.main_data
+
+    @classmethod
+    def save_data(cls, data=None):
+        cls.data_store.serialize_json(data)
+
+    @classmethod
+    def get_data_store(cls):
+        return cls.data_store
+
+    @classmethod
+    def get_switchers(cls, box_index):
+        return cls.data_store.main_data[box_index].switch_array
+
+    @classmethod
+    def add_switcher(cls, box_index, switch: Switch):
+        cls.data_store.main_data[box_index].switch_array.append(switch)
+        cls.data_store.update_data(cls.data_store.main_data)
+
+    @classmethod
+    def add_block(cls, box: Box):
+        cls.data_store.main_data.append(box)
+        cls.data_store.update_data(cls.data_store.main_data)
+
     @staticmethod
     def on_message(mqttc, obj, msg):
         log_message(
@@ -43,6 +73,10 @@ class Switcher:
     @staticmethod
     def on_log(obj, level, message: str):
         log_message(logger.get_time() + message)
+
+    @classmethod
+    def change_data_path(cls, path):
+        cls.data_store.data_file_path = path
 
     @classmethod
     def try_connect(cls, sleep_time=3):
@@ -76,10 +110,10 @@ class Switcher:
         log_message(logger.get_time() + "Subscribed: " + str(mid) + " " + str(granted_qos))
 
     @classmethod
-    def send_message(cls, index: int, status: bool):
+    def switch_to(cls, index: int, status: int, topic=TOPIC):
         message = str(index) + ":" + str(int(status))
         log_message("Sending message: [" + message + "]")
-        cls.mqttc.publish(TOPIC, payload=message)
+        cls.mqttc.publish(topic, payload=message)
         log_message("Message has been sent.")
 
     # subscribes to all topics
@@ -92,15 +126,22 @@ class Switcher:
         cls.mqttc.loop_start()
 
     @classmethod
+    def get_boxes(cls):
+        return cls.data_store.main_data
+
+    @classmethod
     def run(cls):
         cls.try_connect()
         cls.subscribe()
         cls.start_looping()  # loop forever if , meaning thread goes on forever
+
+    def get_statuses(self):
+        pass
 
 
 if __name__ == "__main__":
     logger.set_filepath("../logs/log")
     switcher = Switcher("junior", "project")
     switcher.run()  # thread is stopped here on cls.loop_forever()
-    switcher.send_message(15, True)
+    switcher.switch_to(15, True)
     sleep(60)

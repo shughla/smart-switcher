@@ -1,4 +1,4 @@
-<html>
+<html xmlns="http://www.w3.org/1999/html">
 <head>
     <meta charSet="UTF-8">
     <title>Smart Switcher</title>
@@ -7,81 +7,58 @@
     <link rel="shortcut icon" href="{{ url_for('static', filename='favicon.ico') }}">
 </head>
 <body class="switchers-body">
-    <a href="/boxes" class="go-back" >უკან დაბრუნება</a>
-    <h1 class="switchers-name">I სართული</h1>
-    <table class="switches-table">
-        <tr >
-            <th>ოთახის ნომერი</th>
-            <th>ჩამრთველი-გამომრთველი</th>
-            <th>
-                <input type="submit" class="check-btn" value="შემოწმება">
-            </th>
-          </tr>
-        <tr>
-            <td>I ოთახი</td>
-            <td class="mid">
-                <label class="rocker">
-                    <input type="checkbox">
+<a href="/boxes" class="go-back" >უკან დაბრუნება</a>
+<h1 class="switchers-name">{{data.description}}</h1>
+<table class="switches-table">
+    <tr>
+        <th>ოთახის ნომერი</th>
+        <th>ჩამრთველი-გამომრთველი</th>
+        <th>
+            <input type="submit" class="check-btn" value="შემოწმება">
+        </th>
+    </tr>
+
+            {%for num in range(data3|length) %}
+      <tr>
+        <td>{{data3[num].name}}</td>
+        <td class="mid">
+            <label class="rocker">
+                <iframe name="frame" style="display:none;" ></iframe>
+                <form target="frame" action="/switch" method="post">
+                {% if data3[num].status%}
+                    <input type="checkbox" onchange="this.form.submit()" checked="checked" name="check">
+                {% else %}
+                    <input type="checkbox" onchange="this.form.submit()" name="check">
+                {% endif %}
                     <span class="switch-left">On</span>
                     <span class="switch-right">Off</span>
-                </label>
-            </td>
-            <td class="switch-on">
-                ჩართულია
-            </td>
-        </tr>
-        <tr>
-            <td>II ოთახი</td>
-            <td class="mid">
-                <label class="rocker">
-                    <input type="checkbox">
-                    <span class="switch-left">On</span>
-                    <span class="switch-right">Off</span>
-                </label>
-            </td>
-            <td class="switch-off">
-                გამორთულია
-            </td>
-        </tr>
-        <tr>
-            <td>III ოთახი</td>
-            <td class="mid">
-                <label class="rocker">
-                    <input type="checkbox">
-                    <span class="switch-left">On</span>
-                    <span class="switch-right">Off</span>
-                </label>
-            </td>
-            <td class="switch-off">
-                გამორთულია
-            </td>
-        </tr>
-        <tr>
-            <td>IV ოთახი</td>
-            <td class="mid">
-                <label class="rocker">
-                    <input type="checkbox">
-                    <span class="switch-left">On</span>
-                    <span class="switch-right">Off</span>
-                </label>
-            </td>
-            <td class="switch-off">
-                გამორთულია
-            </td>
-        </tr>
-        <tr class="new-switcher-tr">
-            <td class="new-switcher">ახალი ჩამრთველის სახელი:</td>
+                    <input type="hidden"  name="idx" value="{{num}}">
+                </form>
+            </label>
+        </td>
+        <td class="switch-on">
+            ჩართულია
+        </td>
+    </tr>
+    {%endfor%}
+
+
+    <tr class="new-switcher-tr">
+        <td class="new-switcher">ახალი ჩამრთველის სახელი:</td>
+        <form action="/add_switcher" method="post" >
             <td class="new-switcher">
-                <input type="text" class="new-switcher-text" value="">
+                <input type="text" class="new-switcher-text" value="" name="switcher_name">
+                <input type="hidden" name="box_index" value="{{data2}}"
             </td>
             <td class="new-switcher">
                 <input type="submit" class="new-switcher-btn" value="დამატება">
             </td>
-        </tr>
-    </table>
-    <form method="get" action="/edit">
-        <input type="submit" value="რედაქტირება" class="edit-btn">
-    </form>
+        </form>
+    </tr>
+</table>
+<form method="get" action="/edit">
+    <input type="submit" value="რედაქტირება" class="edit-btn">
+</form>
 
 </body>
 </html>

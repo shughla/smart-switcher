@@ -1,0 +1,1 @@
+"{ \"boxes\": [{\n    \"description\": \"ბლოკი\",\n    \"switch_array\": [\n        {\n            \"index\": 0,\n            \"name\": \"სვიჩერი 1\",\n            \"status\": false\n        },\n        {\n            \"index\": 1,\n            \"name\": \"სვიჩერი 2\",\n            \"status\": false\n        }\n    ]\n}]}"
