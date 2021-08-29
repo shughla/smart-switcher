@@ -1,12 +1,11 @@
 import json
 
-
 from SwitcherWebServer.Switcher.switch import Switch
 from SwitcherWebServer.Switcher.box import Box
 
 
 class DataStore:
-    main_data = list() # type: list[Box]
+    main_data = list()  # type: list[Box]
     DEFAULT_FILE_PATH = "Data/data.json"
 
     # this needs ../data to exist
@@ -20,13 +19,12 @@ class DataStore:
 
     @classmethod
     def deserialize_json(cls, data_file_path=DEFAULT_FILE_PATH):
-        with open(data_file_path,"r", encoding="utf8") as f:
+        with open(data_file_path, "r", encoding="utf8") as f:
             if f.readline().strip(" \n") == "":
                 return
         with open(data_file_path, "r", encoding="utf8") as f:
             data = json.load(f)
             cls.convert_to_boxes(data)
-
 
     @classmethod
     def get_switches(cls, box_index):
