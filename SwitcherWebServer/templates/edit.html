@@ -31,8 +31,9 @@
         <form method="get" action="/box">
             <input type="submit" value="შენახვა" class="save-btn">
         </form>
-        <form method="get" action="/boxes">
+        <form method="post" action="/delete_box">
             <input type="submit" value="ბლოკის წაშლა" class="delete-btn">
+            <input type="hidden" name="data2" value="{{data2}}">
         </form>
     </div>
 </body>
