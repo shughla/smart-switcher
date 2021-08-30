@@ -53,9 +53,20 @@ class Switcher:
     def remove_box(cls, box_index):
         cls.data_store.main_data.pop(box_index)
         cls.data_store.update_data(cls.data_store.main_data)
+
     @classmethod
     def remove_switcher(cls, box_index, index):
         cls.data_store.main_data[box_index].switch_array.pop(index)
+        cls.data_store.update_data(cls.data_store.main_data)
+
+    @classmethod
+    def update_box_name(cls, box_index, box_name):
+        cls.data_store.main_data[box_index].description = box_name
+        cls.data_store.update_data(cls.data_store.main_data)
+
+    @classmethod
+    def update_name(cls, box_index, index, name):
+        cls.data_store.main_data[box_index].switch_array[index].name = name
         cls.data_store.update_data(cls.data_store.main_data)
 
     @classmethod

@@ -114,6 +114,7 @@ def render_if_authenticated(template_name, data=None, data2=None, data3=None):
 @app.route('/switch', methods=['GET'])
 @app.route('/edit', methods=['GET'])
 @app.route('/delete_box', methods=['GET'])
+@app.route('/edit_box_name', methods=['GET'])
 def main_menu():
     return render_main_page()
 
@@ -139,7 +140,7 @@ def box_page():
 
 def get_index(req: request):
     index = "error"
-    for k in request.values:
+    for k in req.values:
         if len(k) == 0:
             continue
         index = int(k)
@@ -147,9 +148,28 @@ def get_index(req: request):
     return index
 
 
+@app.route('/update_box_name', methods=['POST'])
+def update_box_name():
+    box_name = request.form.get("box_name")
+    box_index = int(request.values["data2"])
+    switcher.update_box_name(box_index, box_name)
+    displayed_box = switcher.get_data()[box_index]
+    return render_if_authenticated("edit.html", displayed_box, box_index, switcher.get_switchers(box_index))
+
+
+@app.route('/edit_switch_name', methods=['POST'])
+def edit_switch_name():
+    name = request.form.get("new_name")
+    index = int(request.values["index"])
+    box_index = int(request.values["data2"])
+    switcher.update_name(box_index, index, name)
+    displayed_box = switcher.get_data()[box_index]
+    return render_if_authenticated("edit.html", displayed_box, box_index, switcher.get_switchers(box_index))
+
+
 @app.route('/delete_switch', methods=['POST'])
 def edit_page():
-    index = get_index(request)
+    index = int(request.values["index"])
     box_index = int(request.values["data2"])
     switcher.remove_switcher(box_index, index)
     displayed_box = switcher.get_data()[box_index]

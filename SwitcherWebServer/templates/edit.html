@@ -8,33 +8,41 @@
 
 </head>
 <body class="switchers-body">
-    <a href="/box" class="go-back" >უკან დაბრუნება</a>
-    <h1 class="edit-switchers-name">
-        <input type="text" value="{{data.description}}" class="box-name-edit">
-    </h1>
-    <table class="edit-table">
-        {%for num in range(data3|length) %}
-        <form method="post" action="/delete_switch">
-            <tr>
-                <td>
-                    <input type="text" value="{{data3[num].name}}" class="switch-name-edit" name={{num}}>
+<a href="/box" class="go-back" >უკან დაბრუნება</a>
+<h1 class="edit-switchers-name">
+    <form method="post" action="/update_box_name">
+        <input type="submit" value="შენახვა" class="save-btn">
+        <input type="text" value="{{data.description}}" class="box-name-edit" name="box_name">
+        <input type="hidden" name="data2" value="{{data2}}">
+    </form>
+</h1>
+<table class="edit-table">
+    {%for num in range(data3|length) %}
+
+        <tr>
+            <td>
+                <form method="post" action="/edit_switch_name">
+                    <input type="text" value="{{data3[num].name}}" class="switch-name-edit" name="new_name">
                     <input type="hidden" name="data2" value="{{data2}}">
-                </td>
-                <td>
+                    <input type="hidden" name="index" value="{{num}}">
+                </form>
+            </td>
+            <td>
+                <form method="post" action="/delete_switch">
                     <input type="submit" value="წაშლა" class="switch-delete-btn">
-                </td>
-            </tr>
-        </form>
-        {%endfor%}
-    </table>
-    <div class="btns-div">
-        <form method="get" action="/box">
-            <input type="submit" value="შენახვა" class="save-btn">
-        </form>
-        <form method="post" action="/delete_box">
-            <input type="submit" value="ბლოკის წაშლა" class="delete-btn">
-            <input type="hidden" name="data2" value="{{data2}}">
-        </form>
-    </div>
+                    <input type="hidden" name="data2" value="{{data2}}">
+                    <input type="hidden" name="index" value="{{num}}">
+                </form>
+            </td>
+        </tr>
+    {%endfor%}
+</table>
+<div class="btns-div">
+
+    <form method="post" action="/delete_box">
+        <input type="submit" value="ბლოკის წაშლა" class="delete-btn">
+        <input type="hidden" name="data2" value="{{data2}}">
+    </form>
+</div>
 </body>
 </html>
