@@ -14,21 +14,21 @@
 
 
 
-<form method="post" action="/box">
+
     <div class="box-wrap">
         {%for num in range(data|length) %}
-            <input type="submit" value="{{data[num].description}}" class="box" name="{{num}}">
+            <form method="post" action="/box">
+                <input type="submit" value="{{data[num].description}}" class="box" name="{{num}}">
+            </form>
         {%endfor%}
+        <form action="/add_block" method="POST">
+        <div class="add-box">
+            <a class="new-box">ახალი ბლოკის სახელი:</a>
+            <input type="text" class="new-box-text" name="description" value="">
+            <input type="submit" class="new-box-btn" value="დამატება">
+        </div>
+        </form>
     </div>
-</form>
-
-<form action="/add_block" method="POST">
-    <div class="add-box">
-        <a class="new-box">ახალი ბლოკის სახელი:</a>
-        <input type="text" class="new-box-text" name="description" value="">
-        <input type="submit" class="new-box-btn" value="დამატება">
-    </div>
-</form>
 
 </body>
 </html>

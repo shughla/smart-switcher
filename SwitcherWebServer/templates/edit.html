@@ -11,8 +11,8 @@
 <a href="/box" class="go-back" >უკან დაბრუნება</a>
 <h1 class="edit-switchers-name">
     <form method="post" action="/update_box_name">
-        <input type="submit" value="შენახვა" class="save-btn">
         <input type="text" value="{{data.description}}" class="box-name-edit" name="box_name">
+        <input type="submit" value="შენახვა" class="save-btn">
         <input type="hidden" name="data2" value="{{data2}}">
     </form>
 </h1>
@@ -21,10 +21,15 @@
 
         <tr>
             <td>
-                <form method="post" action="/edit_switch_name">
-                    <input type="text" value="{{data3[num].name}}" class="switch-name-edit" name="new_name">
-                    <input type="hidden" name="data2" value="{{data2}}">
-                    <input type="hidden" name="index" value="{{num}}">
+                <form method="post" action="/edit_switch_name" class="edit-div">
+                    <div>
+                        <input type="text" value="{{data3[num].name}}" class="switch-name-edit" name="new_name">
+                        <input type="hidden" name="data2" value="{{data2}}">
+                        <input type="hidden" name="index" value="{{num}}">
+                    </div>
+                    <div>
+                        <input type="submit" class="switch-name-edit-btn" value="შენახვა">
+                    </div>
                 </form>
             </td>
             <td>

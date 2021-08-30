@@ -8,16 +8,21 @@
 </head>
 <body class="switchers-body">
 <a href="/boxes" class="go-back" >უკან დაბრუნება</a>
+<div class="table-title">
 <h1 class="switchers-name">{{data.description}}</h1>
-<table class="switches-table">
-    <tr>
-        <th>ოთახის ნომერი</th>
-        <th>ჩამრთველი-გამომრთველი</th>
-        <th>
-            <input type="submit" class="check-btn" value="შემოწმება">
-        </th>
-    </tr>
+</div>
 
+<table class="switches-table">
+    <thead>
+        <tr>
+            <th>ოთახის ნომერი</th>
+            <th>ჩამრთველი-გამომრთველი</th>
+            <th>
+                <input type="submit" class="check-btn" value="შემოწმება">
+            </th>
+        </tr>
+    </thead>
+    <tbody class="table-hover">
             {%for num in range(data3|length) %}
       <tr>
         <td>{{data3[num].name}}</td>
@@ -36,25 +41,27 @@
                 </form>
             </label>
         </td>
-        <td class="switch-on">
-            ჩართულია
+        <td >
+            <a class="switch-on">ჩართულია</a>
+
         </td>
     </tr>
     {%endfor%}
-
-
+    </tbody>
+    <tfoot>
     <tr class="new-switcher-tr">
         <td class="new-switcher">ახალი ჩამრთველის სახელი:</td>
         <form action="/add_switcher" method="post" >
             <td class="new-switcher">
                 <input type="text" class="new-switcher-text" value="" name="switcher_name">
-                <input type="hidden" name="box_index" value={{data2}}
+                <input type="hidden" name="box_index" value={{data2}}>
             </td>
             <td class="new-switcher">
                 <input type="submit" class="new-switcher-btn" value="დამატება">
             </td>
         </form>
     </tr>
+    </tfoot>
 </table>
 <form method="post" action="/edit">
     <input type="submit" value="რედაქტირება" class="edit-btn">
