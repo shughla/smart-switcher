@@ -109,10 +109,8 @@ def render_if_authenticated(template_name, data=None, data2=None, data3=None):
 
 
 @app.route('/add_switcher', methods=['GET'])
-@app.route('/box', methods=['GET'])
 @app.route('/boxes', methods=['GET'])
 @app.route('/switch', methods=['GET'])
-@app.route('/edit', methods=['GET'])
 @app.route('/delete_box', methods=['GET'])
 @app.route('/edit_box_name', methods=['GET'])
 def main_menu():
@@ -131,7 +129,7 @@ def add_switcher():
     return render_if_authenticated("box.html", displayed_box, box_index, switcher.data_store.get_switches(box_index))
 
 
-@app.route('/box', methods=['POST'])
+@app.route('/box')
 def box_page():
     index = get_index(request)
     return render_if_authenticated("box.html", switcher.get_boxes()[index], index,
@@ -183,7 +181,7 @@ def delete_box():
     return render_main_page()
 
 
-@app.route('/edit', methods=['POST'])
+@app.route('/edit')
 def goto_edit_page():
     box_index = int(request.values["data2"])
     displayed_box = switcher.get_data()[box_index]

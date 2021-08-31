@@ -1,4 +1,4 @@
-import time
+import datetime
 
 
 class Logger:
@@ -21,11 +21,12 @@ class Logger:
 
     @classmethod
     def get_filepath(cls) -> str:
-        return cls.path
+        return cls.filepath
 
     @classmethod
     def get_time(cls) -> str:
-        return time.ctime() + " - "
+        t = datetime.datetime.now()
+        return t.strftime("[%d.%m.%y] Time: %H:%M:%S") + " - "
 
 
 if __name__ == '__main__':
