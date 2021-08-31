@@ -129,7 +129,7 @@ def add_switcher():
     return render_if_authenticated("box.html", displayed_box, box_index, switcher.data_store.get_switches(box_index))
 
 
-@app.route('/box')
+@app.route('/box', methos['POST'])
 def box_page():
     index = get_index(request)
     return render_if_authenticated("box.html", switcher.get_boxes()[index], index,

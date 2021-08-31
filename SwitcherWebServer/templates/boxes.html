@@ -17,7 +17,7 @@
 
     <div class="box-wrap">
         {%for num in range(data|length) %}
-            <form method="get" action="/box">
+            <form method="post" action="/box">
                 <input type="submit" value="{{data[num].description}}" class="box" name="{{num}}">
             </form>
         {%endfor%}
