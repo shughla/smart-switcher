@@ -41,8 +41,8 @@
   // wifi and broker data
   const char* ssid = "TP-LINK_5FEDE0";
   const char* password = "23604698";
-  const char* mqttServer = "2.tcp.ngrok.io";
-  const int mqttPort = 19423;
+  const char* mqttServer = "4.tcp.ngrok.io";
+  const int mqttPort = 11716;
   const char* mqttUser = "junior";
   const char* mqttPassword = "project";
 
@@ -80,21 +80,22 @@
     }
   }
 
-  boolean readSensor(int n){
+  char readSensor(int n){
     double val  = analogRead(sensors[n]);
-    return val < 20;
+    if (val < 20) return '1';
+    return '0';
   }
   
   void sendSensorData(){
-    isChecking = true;
     for(int i = 0;i<TOTAL_NUMBER;i++){
-      if(readSensor(i)){
-        client.publish(TOPIC,i + ":1");
-      }else{
-        client.publish(TOPIC,i + ":0");
-      }
+      char val[5];
+      val[0] = 'c';
+      val[4] = '\0';
+      val[1] = '0' + i;
+      val[2] = ':';
+      val[3] = readSensor(i);
+       client.publish(TOPIC,val);
     }
-    isChecking = false;
   }
   
   void reconnectToBroker(){
@@ -114,7 +115,7 @@
   
   
   void callback(char* topic, byte* payload, unsigned int length){
-      if(isChecking) return;
+      if((char)payload[0] == 'c') return;
       Serial.print("Message arrived in topic: ");
       Serial.println(topic);
       Serial.print("Message:");
@@ -129,7 +130,7 @@
       memcpy(p, payload, length);
       p[length] = NULL;
       String message(p);
-      if(message == "check"){
+      if(message == "sensors"){
             sendSensorData();
         return;
       }
