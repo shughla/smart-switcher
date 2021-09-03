@@ -87,10 +87,8 @@
     for(int i = 0;i<TOTAL_NUMBER;i++){
       String st = String(i);
       if(readSensor(i)){
-        st = st + ":1";
         client.publish(TOPIC,i + ":1");
       }else{
-        st = st + ":0";
         client.publish(TOPIC,i + ":0");
       }
     }
