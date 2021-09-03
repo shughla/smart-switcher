@@ -45,7 +45,9 @@
   const int mqttPort = 19423;
   const char* mqttUser = "junior";
   const char* mqttPassword = "project";
-   
+
+  boolean isChecking = false;
+  
   static const int DELAY_FOR_RECONNECT_BROKER = 2000;
   static const int DELAY_FOR_RECONNECT_WIFI = 500;
   
@@ -83,15 +85,16 @@
     return val < 20;
   }
   
-    void sendSensorData(){
+  void sendSensorData(){
+    isChecking = true;
     for(int i = 0;i<TOTAL_NUMBER;i++){
-      String st = String(i);
       if(readSensor(i)){
         client.publish(TOPIC,i + ":1");
       }else{
         client.publish(TOPIC,i + ":0");
       }
     }
+    isChecking = false;
   }
   
   void reconnectToBroker(){
@@ -111,6 +114,7 @@
   
   
   void callback(char* topic, byte* payload, unsigned int length){
+      if(isChecking) return;
       Serial.print("Message arrived in topic: ");
       Serial.println(topic);
       Serial.print("Message:");
