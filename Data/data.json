@@ -1,1 +1,1 @@
-"{ \"boxes\": [{\n    \"description\": \"asdasd\",\n    \"switch_array\": [\n        {\n            \"index\": 0,\n            \"name\": \"asd\",\n            \"status\": 1\n        }\n    ]\n}]}"
+"{ \"boxes\": [{\n    \"description\": \"asdasd\",\n    \"switch_array\": [\n        {\n            \"index\": 0,\n            \"name\": \"asd\",\n            \"status\": 0\n        },\n        {\n            \"index\": 1,\n            \"name\": \"2\",\n            \"status\": 1\n        }\n    ]\n}]}"

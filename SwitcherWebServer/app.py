@@ -102,12 +102,13 @@ def login_page():
     return render_main_page()
 
 
-def render_if_authenticated(template_name, data=None, data2=None, data3=None):
+def render_if_authenticated(template_name, data=None, data2=None, data3=None, sensor_diff=None):
     if not is_authenticated():
         return render_login()
-    return render_template(template_name, data=data, data2=data2, data3=data3)
+    return render_template(template_name, data=data, data2=data2, data3=data3, sensor_diff=sensor_diff)
 
 
+@app.route('/check', methods=['GET'])
 @app.route('/edit', methods=['GET'])
 @app.route('/add_switcher', methods=['GET'])
 @app.route('/boxes', methods=['GET'])
@@ -136,6 +137,33 @@ def box_page():
     index = get_index(request)
     return render_if_authenticated("box.html", switcher.get_boxes()[index], index,
                                    switcher.get_switchers(index))
+
+
+@app.route('/check', methods=['POST'])
+def get_sensor_values():
+    box_index = int(request.values.get("box_index"))
+    sensor_output = switcher.get_statuses(box_index)  # can be None
+    displayed_box = switcher.get_data()[box_index]
+    diff = None
+    if sensor_output is not None:
+        diff = []
+        for i in range(len(displayed_box.switch_array)):
+            diff.append(False)  # means it's normal
+            if sensor_output[i].status != displayed_box.switch_array[i].status:
+                diff[i] = True  # means it's different
+                switcher.update_switch(box_index, i, sensor_output[i].status)
+
+    return render_if_authenticated("box.html", displayed_box, box_index,
+                                   switcher.data_store.get_switches(box_index), diff)
+
+
+@app.route('/send_check', methods=['POST'])
+def check_sensors():
+    box_index = int(request.values.get("box_index"))
+    displayed_box = switcher.get_data()[box_index]
+    switcher.check_statuses(box_index)
+    return render_if_authenticated("box.html", displayed_box, box_index,
+                                   switcher.data_store.get_switches(box_index))
 
 
 def get_index(req: request):
@@ -192,7 +220,6 @@ def goto_edit_page():
 
 @app.route('/switch', methods=['POST'])
 def switch_redirect():
-    terminal_print(request.values)
     index = int(request.values["idx"])
     status = request.form.get("check")
     if status == "on":

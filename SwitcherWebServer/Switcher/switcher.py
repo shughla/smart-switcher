@@ -12,6 +12,7 @@ TOPIC = "switcher"  # sends something like this: index:status.
 logger = Logger()
 
 topic_index = {"switcher": 0}
+index_topic = {0: "switcher"}
 
 import sys
 
@@ -28,6 +29,8 @@ def log_message(message):
 class Switcher:
     data_store = DataStore()
     client = mqtt.Client()
+    received_data_status = False
+    received_data = dict()  # type: dict[int:list[Switch]]  # box index -> switch list
 
     # need to call .run() after this
     def __init__(self, username, password):
@@ -40,6 +43,29 @@ class Switcher:
 
     @classmethod
     def on_message(cls, mqttc, obj, msg):
+        message_value = bytes(msg.payload).decode()
+        if message_value == "sensors":
+            log_message(logger.get_time() + "Sending sensor update request.")
+            cls.received_data_status = False
+            cls.received_data = None
+            return
+        if message_value.startswith("c"):
+            message = message_value[1:].split(":")
+            switch_id = int(message[0])
+            switch_state = int(message[1])
+            box_index = topic_index.get(msg.topic)
+            if switch_id == 0:
+                log_message(logger.get_time() + "Receiving sensor checks for topic:" + msg.topic)
+            log_message(logger.get_time() + "switch:" + str(switch_id) + ", status:" + str(switch_state))
+            if cls.received_data is None:
+                cls.received_data = dict()
+            current = cls.received_data.get(box_index, [])
+            current.append(Switch("", switch_id, switch_state))
+            cls.received_data[box_index] = current
+            if len(cls.data_store.main_data[box_index].switch_array) == switch_id + 1:
+                log_message(logger.get_time() + "Switcher finished receiving sensor outputs.")
+                cls.received_data_status = True
+            return
         message = bytes(msg.payload).decode().split(":")
         switch_id = int(message[0])
         switch_state = int(message[1])
@@ -48,6 +74,22 @@ class Switcher:
             logger.get_time() + "topic: " + msg.topic + ". qos: " + str(msg.qos) +
             ". id: " + str(switch_id) + ", state: " + str(switch_state))
         # check msg, if status error then set error flag or something similar.
+
+    @classmethod
+    def check_statuses(cls, index):
+        cls.client.publish(index_topic.get(index), payload="sensors")
+
+    @classmethod
+    def get_statuses(cls, index):
+        if cls.received_data_status:
+            cls.received_data_status = False
+            return cls.received_data.get(index)
+        return None
+
+    @classmethod
+    def clear_status_check(cls, box_id):
+        cls.received_data_status = False
+        cls.received_data = None
 
     @classmethod
     def on_connect(cls, mqttc, obj, flags, rc):
@@ -170,9 +212,6 @@ class Switcher:
         cls.try_connect()
         cls.client.subscribe(topic)
         cls.start_looping()  # loop forever if , meaning thread goes on forever
-
-    def get_statuses(self):
-        pass
 
 
 if __name__ == "__main__":

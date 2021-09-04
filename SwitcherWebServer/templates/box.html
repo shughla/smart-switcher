@@ -18,7 +18,15 @@
             <th>ოთახის ნომერი</th>
             <th>ჩამრთველი-გამომრთველი</th>
             <th>
-                <input type="submit" class="check-btn" value="შემოწმება">
+                <form action="/send_check" method="post">
+                    <input type="submit" class="check-btn" value="სენსორის შემოწმება">
+                    <input type="hidden" name="box_index" value={{data2}}>
+                </form>
+
+                 <form action="/check" method="post">
+                    <input type="submit" class="check-btn" value="განახლება">
+                    <input type="hidden" name="box_index" value={{data2}}>
+                </form>
             </th>
         </tr>
     </thead>
@@ -35,16 +43,23 @@
                 {% else %}
                     <input type="checkbox" onchange="this.form.submit()" name="check">
                 {% endif %}
+
                     <span class="switch-left">On</span>
                     <span class="switch-right">Off</span>
                     <input type="hidden"  name="idx" value="{{num}}">
                 </form>
             </label>
         </td>
-        <td >
-            <a class="switch-on">ჩართულია</a>
-
-        </td>
+          <td >
+              {% if data3[num].status %}
+                  <a class="switch-on">ჩართულია</a>
+              {% else %}
+                  <a class="switch-off">გამორთულია</a>
+              {% endif %}
+              {% if sensor_diff and sensor_diff[num] == True %}
+                  შეიცვალა
+              {% endif %}
+          </td>
     </tr>
     {%endfor%}
     </tbody>

@@ -8,6 +8,7 @@ class DataStore:
     main_data = list()  # type: list[Box]
     DEFAULT_FILE_PATH = "Data/data.json"
 
+
     # this needs ../data to exist
     def __init__(self, data_file_path=DEFAULT_FILE_PATH):
         self.data_file_path = data_file_path
