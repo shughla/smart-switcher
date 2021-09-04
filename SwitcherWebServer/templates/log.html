@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>logs</title>
+    <link rel="shortcut icon" href="{{ url_for('static', filename='favicon.ico') }}">
+</head>
+<body style="overflow: auto;">
+<h1>Logs:</h1>
+<iframe src="../logs/log" name="i_frame"
+        style="overflow-y: auto; display:block; border:none; height:100vmax; width:100%;" ></iframe>
+</body>
+<script type="text/javascript">
+window.scrollTo(0,document.body.scrollHeight);
+</script>
+
+</html>
