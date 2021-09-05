@@ -1,4 +1,4 @@
-from flask import Flask, render_template, request, session
+from flask import Flask, render_template, request, session, Response, url_for
 from Switcher.switcher import Switcher
 from Switcher.box import Box
 from Switcher.switch import Switch
@@ -16,7 +16,7 @@ app.config['SESSION_TYPE'] = "filesystem"
 authenticated = "authenticated"
 switcher = Switcher("junior", "project")
 switcher.run()
-disable_authentication = True
+disable_authentication = False
 # main run, runs switcher first, if can't connect doesn't run server
 
 if __name__ == "__main__":
@@ -102,6 +102,14 @@ def login_page():
     return render_main_page()
 
 
+def respond_if_authenticated(content, mimetype=None):
+    if not is_authenticated():
+        return render_login()
+    if mimetype is not None:
+        return Response(content)
+    return Response(content, mimetype=mimetype)
+
+
 def render_if_authenticated(template_name, data=None, data2=None, data3=None, sensor_diff=None):
     if not is_authenticated():
         return render_login()
@@ -118,6 +126,25 @@ def render_if_authenticated(template_name, data=None, data2=None, data3=None, se
 @app.route('/edit_box_name', methods=['GET'])
 def main_menu():
     return render_main_page()
+
+
+@app.route('/logs', methods=['POST', 'GET'])
+def log_page():
+    response = """<!DOCTYPE html><html lang="en">
+                <head><meta charset="UTF-8">
+                <title>logs</title>
+                <a href="/boxes" class="go-back" >უკან დაბრუნება</a>
+                <link rel= "stylesheet" type= "text/css" href= "{{url_for('static', filename='styles/main.css')}}">
+                <link rel="shortcut icon" href="{{ url_for('static', filename='favicon.ico') }}">
+                </head>
+                <body style="overflow: auto;"><h1>Logs:</h1>"""
+    with open("/home/shug/Desktop/smart-switcher/SwitcherWebServer/static/logs/log", "r") as f:
+        response += "<br>".join(f.readlines())
+    response += """</body>
+                    <script type="text/javascript">window.scrollTo(0,document.body.scrollHeight);
+                    </script>
+                    </html>"""
+    return respond_if_authenticated(response, mimetype='text/html')
 
 
 @app.route('/add_switcher', methods=['POST'])

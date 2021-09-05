@@ -7,10 +7,13 @@
     <link rel="shortcut icon" href="{{ url_for('static', filename='favicon.ico') }}">
 </head>
 <body class="boxes-body">
-
+<form method="post" action="/logs">
+    <input type="submit" class="ui-button" value="ლოგები">
+</form>
 <form method="get" action="/logout">
     <input type="submit" class="logout" value="გასვლა">
 </form>
+
 
 
 

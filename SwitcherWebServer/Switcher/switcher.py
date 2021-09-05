@@ -45,7 +45,7 @@ class Switcher:
     def on_message(cls, mqttc, obj, msg):
         message_value = bytes(msg.payload).decode()
         if message_value == "sensors":
-            log_message(logger.get_time() + "Sending sensor update request.")
+            log_message("Sending sensor update request.")
             cls.received_data_status = False
             cls.received_data = None
             return
@@ -55,23 +55,22 @@ class Switcher:
             switch_state = int(message[1])
             box_index = topic_index.get(msg.topic)
             if switch_id == 0:
-                log_message(logger.get_time() + "Receiving sensor checks for topic:" + msg.topic)
-            log_message(logger.get_time() + "switch:" + str(switch_id) + ", status:" + str(switch_state))
+                log_message("Receiving sensor checks for topic:" + msg.topic)
+            log_message("switch:" + str(switch_id) + ", status:" + str(switch_state))
             if cls.received_data is None:
                 cls.received_data = dict()
             current = cls.received_data.get(box_index, [])
             current.append(Switch("", switch_id, switch_state))
             cls.received_data[box_index] = current
             if len(cls.data_store.main_data[box_index].switch_array) == switch_id + 1:
-                log_message(logger.get_time() + "Switcher finished receiving sensor outputs.")
+                log_message("Switcher finished receiving sensor outputs.")
                 cls.received_data_status = True
             return
         message = bytes(msg.payload).decode().split(":")
         switch_id = int(message[0])
         switch_state = int(message[1])
         cls.update_switch(topic_index[msg.topic], switch_id, switch_state)
-        log_message(
-            logger.get_time() + "topic: " + msg.topic + ". qos: " + str(msg.qos) +
+        log_message("topic: " + msg.topic + ". qos: " + str(msg.qos) +
             ". id: " + str(switch_id) + ", state: " + str(switch_state))
         # check msg, if status error then set error flag or something similar.
 
@@ -93,15 +92,15 @@ class Switcher:
 
     @classmethod
     def on_connect(cls, mqttc, obj, flags, rc):
-        log_message(logger.get_time() + "rc: " + str(rc))
+        log_message("rc: " + str(rc))
 
     @classmethod
     def on_publish(cls, mqttc, obj, mid):
-        log_message(logger.get_time() + "mid: " + str(mid))
+        log_message("mid: " + str(mid))
 
     @classmethod
     def on_subscribe(cls, mqttc, obj, mid, granted_qos):
-        log_message(logger.get_time() + "Subscribed: " + str(mid) + " " + str(granted_qos))
+        log_message("Subscribed: " + str(mid) + " " + str(granted_qos))
 
     @classmethod
     def on_disconnect(cls, mqttc, userdata, rc=0):
@@ -124,7 +123,7 @@ class Switcher:
 
     @staticmethod
     def log(obj, level, message: str):
-        log_message(logger.get_time() + message)
+        log_message(message)
 
     @classmethod
     def get_data_store(cls):
@@ -178,11 +177,10 @@ class Switcher:
                 log_message("Connected successfully.")
                 break
             except ConnectionRefusedError:
-                log_message(logger.get_time() + "try #" + str(
+                log_message("try #" + str(
                     tries) + ": Connection Refused (MQTT Server probably down)")
             if tries == MAX_TRIES:
-                log_message(
-                    logger.get_time() + "Tried connecting " + str(MAX_TRIES) + " times. Cannot connect.")
+                log_message("Tried connecting " + str(MAX_TRIES) + " times. Cannot connect.")
                 break  # return in class
             tries += 1
             sleep(sleep_time)

@@ -5,5 +5,5 @@
 */.Python
 */env/
 */build/
-SwitcherWebServer/logs/log
+SwitcherWebServer/static/logs/log
 .idea/runConfigurations/*

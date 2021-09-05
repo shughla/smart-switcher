@@ -2,7 +2,7 @@ import datetime
 
 
 class Logger:
-    filepath = "SwitcherWebServer/logs/log"
+    filepath = "SwitcherWebServer/static/logs/log"
 
     # default path is logs/log file
     def __init__(self, filepath=None):
@@ -13,7 +13,7 @@ class Logger:
     @classmethod
     def append(cls, value: str):
         with open(cls.filepath, 'a+') as f:
-            f.write(value + "\n")  # \n might be useless
+            f.write(cls.get_time() + value + "\n")  # \n might be useless
 
     @classmethod
     def set_filepath(cls, filepath: str):
