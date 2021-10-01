@@ -2,6 +2,7 @@ from flask import Flask, render_template, request, session, Response, url_for
 from Switcher.switcher import Switcher
 from Switcher.box import Box
 from Switcher.switch import Switch
+from hmac import compare_digest
 import sys  # for debugging purposes
 import json
 
@@ -59,7 +60,7 @@ def get_admin_credentials():
 
 def authenticate(username, password):
     admin_accounts = get_admin_credentials()
-    if admin_accounts.get(username) == password:
+    if compare_digest(admin_accounts.get(username), password):
         session[authenticated] = True
         return True
     return False
