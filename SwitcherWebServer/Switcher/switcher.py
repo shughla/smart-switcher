@@ -71,7 +71,7 @@ class Switcher:
         switch_state = int(message[1])
         cls.update_switch(topic_index[msg.topic], switch_id, switch_state)
         log_message("topic: " + msg.topic + ". qos: " + str(msg.qos) +
-            ". id: " + str(switch_id) + ", state: " + str(switch_state))
+                    ". id: " + str(switch_id) + ", state: " + str(switch_state))
         # check msg, if status error then set error flag or something similar.
 
     @classmethod
