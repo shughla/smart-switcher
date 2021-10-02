@@ -3,6 +3,7 @@ from Switcher.switcher import Switcher
 from Switcher.box import Box
 from Switcher.switch import Switch
 from hmac import compare_digest
+from Switcher.switcher import log_message
 import sys  # for debugging purposes
 import json
 
@@ -179,6 +180,9 @@ def get_sensor_values():
             diff.append(False)  # means it's normal
             if sensor_output[i].status != displayed_box.switch_array[i].status:
                 diff[i] = True  # means it's different
+                log_message("Changed - switch:" + str(i) +
+                            ". status - Was:" + str(sensor_output[i] ^ 1) +
+                            " Is: " + str(sensor_output[i].status))
                 switcher.update_switch(box_index, i, sensor_output[i].status)
 
     return render_if_authenticated("box.html", displayed_box, box_index,
