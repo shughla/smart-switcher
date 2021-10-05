@@ -61,7 +61,8 @@ def get_admin_credentials():
 
 def authenticate(username, password):
     admin_accounts = get_admin_credentials()
-    if compare_digest(admin_accounts.get(username), password):
+    admin_password = admin_accounts.get(username)
+    if admin_password is not None and compare_digest(admin_password, password):
         session[authenticated] = True
         return True
     return False
@@ -181,8 +182,8 @@ def get_sensor_values():
             if sensor_output[i].status != displayed_box.switch_array[i].status:
                 diff[i] = True  # means it's different
                 log_message("Changed - switch:" + str(i) +
-                            ". status - Was:" + str(sensor_output[i] ^ 1) +
-                            " Is: " + str(sensor_output[i].status))
+                            ". status - Was:" + str(not bool(sensor_output[i])) +
+                            " Is: " + str(bool(sensor_output[i].status)))
                 switcher.update_switch(box_index, i, sensor_output[i].status)
 
     return render_if_authenticated("box.html", displayed_box, box_index,
